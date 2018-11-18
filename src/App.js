@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import './App.css';
+import styles from './App.css';
 import Person from './Person/Person';
+// import ErrorBoundary from './ErrorBoundary/ErrorBoundary'; // responsible for Error handling
 
 class App extends Component {
   // 'state' is reserve word
@@ -11,7 +12,8 @@ class App extends Component {
       { id: 'c45', name: 'Gian', age: 22 }
     ],
     otherState: 'some other value',
-    showPersons: false
+    showPersons: false,
+    notif: 'Click "remove" to remove the person!'
   }
 
   nameChangeHandler = (event, id) => {
@@ -43,7 +45,8 @@ class App extends Component {
     const persons = [...this.state.persons];
     persons.splice(personIndex, 1);
     this.setState({
-      persons: persons
+      persons: persons,
+      notif: this.state.persons[personIndex].name + ' is successfully removed!'
     });
   }
 
@@ -55,25 +58,21 @@ class App extends Component {
   }
 
   render() {
-    const style = {
-      backgroundColor: 'green',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer',
-      color: 'white'      
-    }
-
     let persons = null;
-
+    let btnClass = '';
     if ( this.state.showPersons ) {
+
       persons = (
         <div>
+          <br /><br />
+          <div className={styles.notif}>
+            <small>{this.state.notif}</small>
+          </div>
           {this.state.persons.map( (person, index) => {
             return (
               <Person
               click={() => this.deletePersonHandler(index)}
-              name={person.name}
+              name={person.name}  
               age={person.age}
               key={person.id}
               changed={(event) => this.nameChangeHandler(event, person.id)} />
@@ -81,28 +80,28 @@ class App extends Component {
           })}
         </div>
       );
-
-      style.backgroundColor = 'red';
+      
+      btnClass = styles.Red;
     }
 
     // let classes = ['red', 'bold'].join(' '); // return "red bold"
     const classes = [];
     if ( this.state.persons.length <= 2) {
-      classes.push('red');
+      classes.push(styles.red); // classes = ['red']
     }
 
     if (this.state.persons.length <= 1) {
-      classes.push('bold');
+      classes.push(styles.bold); // classes = ['red', 'bold]
     }
 
     return (
-        <div className="App">
+        <div className={styles.App}>
           <h1>Hi, I'm a React App.</h1>
           <p className={classes.join(' ')}>This is really working!</p>
-          <button 
-            style={style}
+          <button
+            className={btnClass}
             onClick={this.togglePersonsHandler}>Toggle Persons</button>
-            {persons}
+          {persons}
         </div>
     );
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'This may work now'));

@@ -8,6 +8,23 @@
    margin-top: 10px;
 }
 
+.Person button.btnRemove {
+   background-color: red; 
+   width: 100px;
+   padding: 10px;
+   border: none;
+   outline: none;
+   color: white;
+   margin-top: 20px;
+ }
+
+ .Person button.btnRemove:hover {
+   background-color:#ff3333;
+   transition: 0.3s;
+   -moz-transition: 0.3s;
+   -o-transition: 0.3s;   
+ }
+
 @media (min-width: 500px) {
    .Person {
       width: 450px;

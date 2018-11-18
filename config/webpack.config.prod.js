@@ -68,7 +68,13 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
     },
     {
       loader: require.resolve('css-loader'),
-      options: cssOptions,
+      options: cssOptions = {
+        importLoaders: 1,
+        modules: true,
+        localIdentName: '[name]__[local]__[hash:base64:5]',
+        minimize: true,
+        sourceMap: shouldUseSourceMap
+      },
     },
     {
       // Options for PostCSS as we reference these options twice
